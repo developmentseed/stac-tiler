@@ -5,7 +5,8 @@ from setuptools import find_packages, setup
 with open("README.md") as f:
     long_description = f.read()
 
-inst_reqs = ["rio-tiler-crs~=2.0", "requests"]
+# rasterio is installed via morecantile, so it's missing the [s3] option to install boto3
+inst_reqs = ["rio-tiler-crs~=2.0", "requests", "boto3"]
 
 extra_reqs = {
     "test": ["pytest", "pytest-cov"],
