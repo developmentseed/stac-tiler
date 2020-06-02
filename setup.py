@@ -15,7 +15,7 @@ extra_reqs = {
 
 setup(
     name="stac-tiler",
-    version="0.0.1",
+    version="0.0rc.1",
     python_requires=">=3",
     description=u"""A rio-tiler plugin to handle STAC items""",
     long_description=long_description,
@@ -28,7 +28,7 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Topic :: Scientific/Engineering :: GIS",
     ],
-    keywords="COG GIS",
+    keywords="COG STAC GIS",
     author=u"Vincent Sarago",
     author_email="vincent@developmentseed.org",
     url="https://github.com/developmentseed/stac-tiler",

@@ -12,7 +12,7 @@ A rio-tiler plugin to handler STAC items
 
 ```bash
 $ pip install pip -U
-$ pip install stac-tiler
+$ pip install stac-tiler --pre  # stac-tiler is in pre-release 0.0rc1 version 
 
 # Or using source
 
