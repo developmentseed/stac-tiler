@@ -5,7 +5,7 @@ from setuptools import find_packages, setup
 with open("README.md") as f:
     long_description = f.read()
 
-inst_reqs = ["rio-tiler-crs~=2.0"]
+inst_reqs = ["rio-tiler-crs~=2.0", "requests"]
 
 extra_reqs = {
     "test": ["pytest", "pytest-cov"],
