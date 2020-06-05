@@ -6,7 +6,7 @@ with open("README.md") as f:
     long_description = f.read()
 
 # rasterio is installed via morecantile, so it's missing the [s3] option to install boto3
-inst_reqs = ["rio-tiler-crs~=2.0", "requests", "boto3"]
+inst_reqs = ["rio-tiler-crs>=2.0.2", "requests", "boto3"]
 
 extra_reqs = {
     "test": ["pytest", "pytest-cov"],
@@ -15,7 +15,7 @@ extra_reqs = {
 
 setup(
     name="stac-tiler",
-    version="0.0rc.1",
+    version="0.0rc.2",
     python_requires=">=3",
     description=u"""A rio-tiler plugin to handle STAC items""",
     long_description=long_description,

@@ -365,38 +365,20 @@ def test_reader_info():
     assert data["B04"]
 
 
-# def test_reader_info():
-#     """Test COGReader.info."""
-#     with COGReader(COG_PATH) as cog:
-#         info = cog.info
-#     assert info["minzoom"] == 5
-#     assert info["maxzoom"] == 8
-#     assert info["center"][-1] == 5
-#     assert info["bounds"]
-#     assert info["band_metadata"]
-#     assert info["band_descriptions"]
-#     assert info["dtype"]
-#     assert info["colorinterp"]
-#     assert info["nodata_type"]
-#     assert not info.get("colormap")
-#     assert not info.get("scale")
-#     assert not info.get("offset")
+@patch("stac_tiler.reader.COGReader", mock_COGReader)
+def test_reader_metadata():
+    """Test STACReader.metadata."""
+    with STACReader(STAC_PATH) as stac:
+        with pytest.raises(InvalidBandName):
+            stac.metadata(assets="B1")
 
-#     with COGReader(COG_CMAP_PATH) as cog:
-#         info = cog.info
-#     assert info["colormap"]
+        data = stac.metadata(assets="B01")
+    assert len(data.keys()) == 1
+    assert data["B01"]
+    assert data["B01"]["statistics"]
 
-#     with COGReader(COG_SCALE_PATH) as cog:
-#         info = cog.info
-#     assert info["scale"]
-#     assert info["offset"]
-
-
-# def test_GTiffOptions():
-#     """Test rio_tiler_crs.reader.geotiff_options function with different projection."""
-#     info = geotiff_options(1, 1, 1)
-#     assert info["crs"] == CRS.from_epsg(3857)
-
-#     tms = morecantile.tms.get("WorldCRS84Quad")
-#     info = geotiff_options(1, 1, 1, tms=tms)
-#     assert info["crs"] == CRS.from_epsg(4326)
+    with STACReader(STAC_PATH) as stac:
+        data = stac.metadata(assets=["B04", "B02"])
+    assert len(data.keys()) == 2
+    assert data["B02"]
+    assert data["B04"]

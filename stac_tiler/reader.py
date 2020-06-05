@@ -150,6 +150,10 @@ class STACReader:
     stats(assets="B01", pmin=5, pmax=95)
         Get Raster statistics.
     info(assets="B01")
+        Get Assets raster info.
+    metadata(assets="B01", pmin=5, pmax=95)
+        info + stats
+
     """
 
     filepath: str
@@ -440,3 +444,29 @@ class STACReader:
 
         infos = self._info(asset_urls)
         return {asset: infos[ix] for ix, asset in enumerate(assets)}
+
+    def _metadata(self, assets: Sequence[str], *args: Any, **kwargs: Any) -> List:
+        """Assemble multiple COGReader.stats."""
+
+        def worker(asset: str) -> Dict:
+            with COGReader(asset) as cog:
+                return cog.metadata(*args, **kwargs)
+
+        with futures.ThreadPoolExecutor(max_workers=MAX_THREADS) as executor:
+            return list(executor.map(worker, assets))
+
+    def metadata(
+        self,
+        assets: Union[Sequence[str], str],
+        pmin: float = 2.0,
+        pmax: float = 98.0,
+        **kwargs: Any,
+    ) -> Dict:
+        """Return array statistics from COGs."""
+        if isinstance(assets, str):
+            assets = (assets,)
+
+        asset_urls = self._get_href(assets)
+
+        stats = self._metadata(asset_urls, pmin, pmax, **kwargs)
+        return {asset: stats[ix] for ix, asset in enumerate(assets)}

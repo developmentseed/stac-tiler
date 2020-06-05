@@ -86,6 +86,10 @@ class STACReader:
     stats(assets="B01", pmin=5, pmax=95)
         Get Raster statistics.
     info(assets="B01")
+        Get Assets raster info.
+    metadata(assets="B01", pmin=5, pmax=95)
+        info + stats
+
     """
 ```
 
@@ -192,6 +196,45 @@ with STACReader("stac.json") as stac:
     }
 }
 ```
+
+- **STACReader.metadata()**: Return info and statistics for STAC assets 
+
+```python
+with STACReader("stac.json") as stac:
+    print(stac.metadata(["B01"], pmin=5, pmax=95))
+{
+    "B01": {
+        "bounds": [23.10607624352815, 31.50517374437416, 24.296464503939944, 32.51933487169619],
+        "center": [23.701270373734047, 32.012254308035175, 8],
+        "minzoom": 8,
+        "maxzoom": 11,
+        "band_metadata": [[1, {}]],
+        "band_descriptions": [[1, "band1"]],
+        "dtype": "uint16",
+        "colorinterp": ["gray"],
+        "nodata_type": "Nodata"
+        "statistics": {
+            "1": {
+                "pc": [
+                    324,
+                    5046
+                ],
+                "min": 133,
+                "max": 8582,
+                "std": 1230.6977195618235,
+                "histogram": [
+                    [
+                        199042, 178438, 188457, 118369, 57544, 20622, 9275, 2885, 761, 146
+                    ],
+                    [
+                        133, 977.9, 1822.8, 2667.7, 3512.6, 4357.5, 5202.4, 6047.3, 6892.2, 7737.099999999999, 8582
+                    ]
+                ]
+            }
+        }
+    }
+```
+
 
 ## Contribution & Development
 
