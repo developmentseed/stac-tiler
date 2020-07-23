@@ -1,5 +1,7 @@
 # stac-tiler
 
+**This project has been integrated to [rio-tiler-crs](https://github.com/cogeotiff/rio-tiler-crs)**
+
 A rio-tiler plugin to handler STAC items
 
 
